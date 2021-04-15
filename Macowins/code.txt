@@ -1,0 +1,61 @@
+Class Prenda{
+    Decimal PrecioBase;
+    TipoPrenda tipoPrenda;
+    Estado estado;
+    public Decimal precioVenta(){
+        return estado.precio(PrecioBase);
+    }
+}
+
+Enum TipoPrenda{
+    Saco,Pantalon,Camisa
+}
+
+abstract Class Estado{
+    public Decimal precio(Decimal precioOriginal){
+        return precioOriginal
+    }
+}
+
+Class Nueva extends Estado{
+
+}
+
+Class Promocion extends Estado{
+    Decimal descuento;
+    override public Decimal precio(Decimal precioOriginal){
+        return precioOriginal - descuento
+    } 
+}
+
+Class Liquidacion extends Estado{
+    override public Decimal precio(Decimal precioOriginal){
+        return precioOriginal /2
+    }
+}
+
+Class Venta{
+    List<Item> items;
+    Datetime fecha;
+    
+    public Decimal total(){
+        return items.sum(cada -> cada.precioVenta());
+    }
+}
+
+Class VentaTarjeta extends Venta{
+    Decimal coeficiente;
+    Int cuotas;
+    override public Decimal total(){
+        return cuotas * coeficiente + 0.01 * items.sum(cada -> cada.precioVenta());
+    }
+}
+
+Class Item{
+    Prenda prenda;
+    Int cantidad;
+
+    public Decimal precioTotal(){
+        return prenda.precioVenta() * cantidad;
+    }
+}

@@ -1,0 +1,67 @@
+@startuml
+
+title Classes - Class Diagram
+
+class Prenda {
+	- Decimal precioBase
+	- Estado estado
+	- TipoPrenda tipoPrenda
+
+	+ BigDecimal PrecioVenta()
+}
+
+Enum TipoPrenda{
+    - Saco
+    - Pantalon
+    - Camisa
+}
+
+abstract class Estado{
+    + Decimal precio(Decimal precioOriginal)
+}
+
+
+Class Nueva extends Estado{
+
+}
+
+Class Promocion extends Estado{
+    Decimal descuento;
+    + Decimal precio(Decimal precioOriginal)
+}
+
+Class Liquidacion extends Estado{
+    + Decimal precio(Decimal precioOriginal)
+}
+
+
+Class Venta{
+    List<Item> items;
+    Datetime fecha;
+    
+    + Decimal total()
+}
+
+Class VentaTarjeta extends Venta{
+    Decimal coeficiente;
+    Int cuotas;
+    + Decimal total()
+}
+
+Class Item{
+    Prenda prenda;
+    Int cantidad;
+
+    + Decimal precioTotal()
+}
+
+
+Prenda --> TipoPrenda
+Prenda --> Estado
+Venta --> "*" Item
+Item --> Prenda
+
+
+
+
+@enduml
