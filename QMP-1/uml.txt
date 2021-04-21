@@ -1,0 +1,36 @@
+@startuml
+
+Class Prenda{
+-TipoPrenda tipoPrenda
+-Material material
+-Color colorPrimario
+-Color colorSecundario
+}
+
+Enum Material{
+Tela, Algodon,...
+}
+Class TipoPrenda{
+-String tipo
+-Categoria categoria
++Categoria Categoria()
+}
+
+Enum Categoria{
+Parte_Superior,
+Calzado,
+Parte_inferior,
+Accesorios
+}
+
+Class Color{
+-Int rojo
+-Int verde
+-Int Azul
+}
+
+Prenda --> Material
+Prenda --> TipoPrenda
+Prenda --> Color
+TipoPrenda --> Categoria
+@enduml

@@ -1,0 +1,68 @@
+Class Prenda {
+	TipoPrenda tipoPrenda;
+	Material material;
+	Color colorPrimario;
+	Color colorSecundario;
+	
+	Prenda(TipoPrenda _tipoPrenda, Material _material, Color _primario, Color _secundario){
+		if (_tipoPrenda == null)
+			throw new NoHayPrendaExepcion();
+			else
+			this.tipoPrenda = _tipoPrenda;
+			
+		if(_material == null)
+			throw new NoHayMaterialExcepcion();
+			else
+			this.material = _material
+		if(_primario == null)
+			throw new NoHayColorPrimarioException()
+			else
+			this.colorPrimario = _primario
+			
+		this.colorSecundario = _secundario;
+	}
+}
+Enum Material{
+Tela,
+Algodon
+...
+}
+
+Class TipoPrenda{
+	// Decido tener la clase categoria dentro del tipo para asi poder chequear en algun momento que el tipo se corresponda con la categoria y no genere inconsistencias
+	String tipo;
+	Categoria categoria;
+	
+	TipoPrenda(Categoria _categoria){
+		if(_categoria == null)
+			throw new NoHayCategoriaException();
+			else
+			this.categoria = _categoria;
+	}
+	
+	method Categoria categoria(){
+		return this.categoria;
+	}
+}
+
+Enum Categoria{
+Parte_Superior,
+Calzado,
+Parte_inferior,
+Accesorios
+}
+
+Class Color{
+	// Lo hago basado en la combinacion de colores RGB para poder tener una gama alta de colores.
+	// Otra opcion podria haber sido un ENUM, pero podria ocasionar problemas para distinguir los colores segun quien lo mire
+	Int rojo;
+	Int verde;
+	Int azul;
+	
+	Color(Int _rojo, Int _verde, Int _azul){
+		this.rojo = _rojo;
+		this.verde = _verde;
+		this.azul = _azul;
+	}
+}
+
