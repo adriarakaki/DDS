@@ -1,0 +1,79 @@
+@startuml
+
+Class Prenda{
+-TipoPrenda tipoPrenda
+-Material material
+-Color colorPrimario
+-Color colorSecundario
+-Trama trama
+}
+
+Enum Material{
+Tela, Algodon,...
+}
+Enum Trama{
+Lisa,Rayada,Lunares,...
+}
+Class TipoPrenda{
+-String tipo
+-Categoria categoria
++Categoria Categoria()
+}
+
+Enum Categoria{
+Parte_Superior,
+Calzado,
+Parte_inferior,
+Accesorios
+}
+
+Class Color{
+-Int rojo
+-Int verde
+-Int Azul
+}
+Class Borrador{
+-TipoPrenda tipoPrenda
+-Material material
+-Color colorPrimario
+-Color colorSecundario
+-Trama trama
++setters()
++Prenda generarPrenda()
+}
+Class Uniforme{
+-Prenda prendaSuperior
+-Prenda prendaInferior
+-Prenda prendaCalzado
+}
+Abstract Class Diseñador{
++Uniforme crearUniforme()
++abstract Prenda diseñarPrendaSuperior()
++abstract Prenda diseñarPrendaInferior()
++abstract Prenda diseñarCalzado()
+}
+Class DiseñadorSanJuan{
++Uniforme crearUniforme()
++abstract Prenda diseñarPrendaSuperior()
++abstract Prenda diseñarPrendaInferior()
++abstract Prenda diseñarCalzado()
+}
+Class DiseñadorJhonson{
++Uniforme crearUniforme()
++abstract Prenda diseñarPrendaSuperior()
++abstract Prenda diseñarPrendaInferior()
++abstract Prenda diseñarCalzado()
+}
+Prenda --> Material
+Prenda --> TipoPrenda
+Prenda --> Color
+Prenda --> Trama
+TipoPrenda --> Categoria
+Uniforme --> Prenda
+Uniforme --> Prenda
+Uniforme --> Prenda
+Borrador ..> Prenda
+DiseñadorJhonson --|> Diseñador
+DiseñadorSanJuan --|> Diseñador
+Diseñador..>Uniforme
+@enduml

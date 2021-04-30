@@ -1,0 +1,94 @@
+Class Prenda {
+	TipoPrenda tipoPrenda;
+	Material material;
+	Color colorPrimario;
+	Color colorSecundario;
+	Trama trama
+	
+	Prenda(TipoPrenda _tipoPrenda, Material _material, Color _primario, Color _secundario, Trama _trama){
+	// Quite las validaciones de nulos, ahora estan en el borrador
+		this.tipoPrenda = _tipoPrenda;
+		this.material = _material
+		this.colorPrimario = _primario
+		this.colorSecundario = _secundario;
+		this.trama = _trama
+	}
+}
+Enum Trama{
+Lisa,
+RAYADA,
+Lunares,
+...
+}
+
+Class Borrador{
+	TipoPrenda tipoPrenda;
+	Material material;
+	Color colorPrimario;
+	Color colorSecundario;
+	Trama trama = Trama.Lisa;
+
+	void setTipoPrenda(TipodPrenda _tipoPrenda){
+		if (_tipoPrenda == null)
+			throw new NoHayPrendaExepcion();
+			else
+			this.tipoPrenda = _tipoPrenda;
+	}
+	void setMateria(Material _material){
+		if(_material == null)
+			throw new NoHayMaterialExcepcion();
+			else
+			this.material = _material
+	}
+	void setColorPrimario(Color _color){
+		if(_color == null)
+			throw new NoHayColorPrimarioException()
+			else
+			this.colorPrimario = _color
+	}
+	void setColorSecundario(Color _color){
+		this.colorSecundario = _color
+	}
+	void setTrama(Trama _trama){
+		this.trama = _trama
+	}
+	Prenda generarPrenda(){
+		return new Prenda(this.tipoPrenda, this.material, this.colorPrimario, this.colorSecundario, this.trama)
+	}
+}
+Class Uniforme{
+	Prenda prendaSuperior
+	Prenda prendaInferior
+	Prenda prendaCalzado
+}
+
+Abstract Class Diseñador{
+	Uniforme crearUniforme(){
+		return new Unirforme(diseñarPrendaSuperior(), diseñarPrendaInferior(), diseñarCalzado())
+	}
+	abstract Prenda diseñarPrendaSuperior()
+	abstract Prenda diseñarPrendaInferior()
+	abstract Prenda diseñarCalzado()
+}
+
+Class DiseñadorSanJuan extends Diseñador{
+	@Override method Prenda diseñarPrendaSuperior(){
+		Borrador borrador = new Borrador()
+		// Creo la prenda superior para el colegio san juan
+	}
+	@Override method Prenda diseñarPrendaInferior(){
+		Borrador borrador = new Borrador()
+		// Creo la prenda inferior para el colegio san juan
+	}
+	@Override method Prenda diseñarCalzado(){
+		Borrador borrador = new Borrador()
+		// Creo el calzado para el colegio san juan
+	}
+	
+
+}
+
+Class DiseñadorJhonson extends Diseñador{
+	// Al igual que el DiseñadorSanJuan, overraideo los metodos, y creo las prendas especificas para este colegio
+}
+// Por cada colegio, debo crear su clase y extender de diseñador
