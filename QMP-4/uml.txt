@@ -1,0 +1,39 @@
+@startuml
+
+interface ServicioMeteorologico{
++BigDecimal obtenerClima(String ciudad);
+}
+Class AccuWeather{
+- List<Map<String, Object>> condicionesClimaticas
+- AccuWeatherAPI apiClima;
+- DateTime requestTime
+- Int requestCount 
++BigDecimal obtenerClima(String ciudad);
+}
+
+class ClimaWeatherBit{
++BigDecimal obtenerClima(String ciudad);
+}
+class Usuario{
+-Guardarropa guardarropa
+-ServicioMeteorologico interfazClima
+-String ciudad
+-GeneradorSugerencias generadorSugerencias
++List<Sugerencia> obtenerSugerencias()
+}
+Class Guardarropa{
+-List<Prenda> prendas
++List<Prenda> seleccionarPrendaSegunTemperatura(BigDecimal temperatura)
+}
+Class Prenda{
+...
+-BigDecimal temperaturaMinima
+-BigDecimal temperaturaMaxima
++Bool temperaturaValida(BigDecimal temperatura)
+}
+Guardarropa --> "*" Prenda
+Usuario --> Guardarropa
+Usuario --> ServicioMeteorologico
+AccuWeather ..|> ServicioMeteorologico
+ClimaWeatherBit ..|> ServicioMeteorologico
+@enduml

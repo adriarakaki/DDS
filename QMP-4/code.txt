@@ -1,0 +1,80 @@
+public interface ServicioMeteorologico {
+    BigDecimal obtenerClima(String ciudad);
+}
+public class AccuWeather  implements ServicioMeteorologico{
+    private List<Map<String, Object>> condicionesClimaticas;
+	private AccuWeatherAPI apiClima;
+    private requestTime = null;
+	private requestCount = 0;
+    
+
+private static final AccuWeather INSTANCE = new AccuWeather();
+
+   static instance(){
+       return INSTANCE;
+   }
+   private AccuWeather(){
+       AccuWeatherAPI apiClima = new AccuWeatherAPI();
+   }
+
+    @override
+	public BigDecimal obtenerClima(String ciudad){
+		/*
+            Valido el requesTime, si fue del dia anterior reinicio requestCount a 0
+        */
+        
+        if(requestCount < 10){
+			List<Map<String, Object>> condicionesClimaticas = apiClima.getWeather(ciudad);
+			requestTime = condicionesClimaticas.get(0).get("DateTime").getHourOfDay();
+			return condicionesClimaticas.get(0).get("Temperature");
+		}
+				
+		int horaActual = new DateTime().getHourOfDay();
+
+		return condicionesClimaticas.get(horaActual-requestTime).get("Temperature");
+	}
+}
+
+class ClimaWeatherBit implements ServicioMeteorologico
+{
+    @override
+	public BigDecimal obtenerClima(String ciudad){
+		//Llamada a API de WeatherBit
+	}
+}
+
+class Prenda {
+	....
+	private BigDecimal temperaturaMinima
+	private BigDecimal temperaturaMaxima
+	...
+	public Bool temperaturaValida(BigDecimal temperatura){
+		return temperaturaMinima >= temperatura && temperaturaMaxima =< temperatura;
+	}
+}
+
+class Guardarropa{
+	private List<Prendas> prendas;
+	public List<Prenda> seleccionarPrendaSegunTemperatura(BigDecimal temperatura){
+		return prendas.filter(prenda => (prenda.temperaturaValida(temperatura)));
+	}
+}
+
+class Usuario {
+	...
+	private Guardarropa guardarropas;
+	private ServicioMeteorologico interfazClima;
+	private String ciudad = "Buenos Aires, Argentina";
+	private GeneradorSugerencias generadorSugerencias;
+    ...
+
+	public List<Sugerencia> obtenerSugerencias(){
+        List<Prenda> prendas = guardarropas.seleccionarPrendaSegunTemperatura(interfazClima.obtenerClima(ciudad));
+        return generadorSugerencias.generarSugerenciasDesde(prendas);
+		
+	}
+}
+
+interface GeneradorSugerencias{
+    public List<Sugerencia> generarSugerenciasDesde(List<Prenda> prendasAptas);
+}
