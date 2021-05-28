@@ -1,0 +1,68 @@
+Class Usuario{
+    ....
+    List<Guardarropa> guardarropas;
+}
+Class Guardarropa{
+    CriterioRopa criterioRopa;
+    List<Prenda> prendas;
+    List<Usuario> dueniosGuardarropa;
+    List<Sugerencia> sugerenciasPendientes;
+    List<Sugerencia> sugerenciasAceptadas;
+
+    public void agregrarSugerencia(Sugerencia sugerencia){
+        this.sugerenciasPendientes.add(sugerencia);
+    }
+
+    // Para los siguientes 3 metodos, estoy suponiendo que estos mensaje siempre llegan desde algun dueño del guardarropa
+    // de no ser asi, ademas de la sugerencia, recibiria el usuario que envia el mensaje y lo validaria en una funcion
+    public void aceptarSugerencia(Sugerencia sugerencia){
+        this.prendas = sugerencia.aceptar();
+        this.sugerenciasAceptadas.add(sugerencia);
+        this.sugerenciasPendientes.remove(sugerencia);
+    }
+
+    public void rechazarSugerencia(Sugerencia sugerencia){
+        this.sugerenciasPendientes.remove(sugerencia);
+    }
+    public void deshacerSugerencia(Sugerencia sugerencia){
+        this.prendas = sugerencia.deshacer();
+    }
+
+}
+
+Enum CriterioRopa{
+    // Como no aclara si tiene o tendra alguna funcionalidad, por ahora lo modelamos simplemente como un ENUM
+    Ropa_Viaje, Ropa_Entre_Casa, Ropa_Fiesta, ...
+}
+
+Abstract Class Sugerencia{
+    Prenda prenda;
+    Usuario usuario;
+    public Sugerencia(Prenda _prenda, Usuario _usuario){
+        this.usuario = _usuario;
+        this.prenda = _prenda;
+    }
+    public List<Prenda> aceptar(List<Prenda> prendas);
+    public List<Prenda> deshacer(List<Prenda> prendas);
+}
+Class SugerenciaAgregar extends Sugerencia{
+    @Override
+    public List<Prenda> aceptar(List<Prenda> prendas){
+        return prendas.add(this.prenda);
+    }
+    @Override
+    public List<Prenda> deshacer(List<Prenda> prendas){
+        return prendas.remove(this.prenda);
+    }
+}
+
+Class SugerenciaQuitar extends Sugerencia{
+    @Override
+    public List<Prenda> aceptar(List<Prenda> prendas){
+        return prendas.remove(prenda);
+    }
+    @Override
+    public List<Prenda> deshacer(List<Prenda> prendas){
+        return prendas.add(this.prenda);
+    }
+}

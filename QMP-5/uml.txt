@@ -1,0 +1,50 @@
+@startuml
+
+class Usuario{
+-List<Guardarropa> guardarropas
+...
+}
+class Prenda{
+...
+}
+
+class Guardarropa{
+-CriterioRopa criterioRopa
+-List<Prenda> prendas
+-List<Usuario> dueniosGuardarropa
+-List<Sugerencia> sugerenciasPendientes
+-List<Sugerencia> sugerenciasAceptadas
++void agregrarSugerencia(Sugerencia sugerencia)
++void aceptarSugerencia(Sugerencia sugerencia)
++void rechazarSugerencia(Sugerencia sugerencia)
++void deshacerSugerencia(Sugerencia sugerencia){
+}
+Enum Criterio{
+Ropa_Viaje, Ropa_Entre_Casa, Ropa_Fiesta, ...
+}
+Abstract Class Sugerencia{
+-Prenda prenda
+-Usuario usuario
++List<Prenda> aceptar(List<Prenda> prendas)
++List<Prenda> deshacer(List<Prenda> prendas)
+}
+Class SugerenciaAgregar{
++List<Prenda> aceptar(List<Prenda> prendas)
++List<Prenda> deshacer(List<Prenda> prendas)
+}
+Class SugerenciaQuitar{
++List<Prenda> aceptar(List<Prenda> prendas)
++List<Prenda> deshacer(List<Prenda> prendas)
+}
+Usuario -->"*"Guardarropa
+Guardarropa -->"*"Usuario
+Guardarropa -->"*" Prenda
+Guardarropa -->"*" Sugerencia
+Guardarropa -->"*" Sugerencia
+Guardarropa -->Criterio
+SugerenciaAgregar --|> Sugerencia
+SugerenciaQuitar --|> Sugerencia
+
+
+
+@enduml
