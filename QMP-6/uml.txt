@@ -1,0 +1,62 @@
+@startuml
+
+class Usuario{
+...
+-List<Notificacion> notificaciones
++Sugerencia obtenerSugerenciaDiaria()
++void notificarNuevasAlertas(List<Alerta> alertas)
+}
+
+Class RepoUsuarios {
+-List<Usuario> usuarios
++ List<Usuario> getAll()
+}
+Class ServiceSugerenciaDiaria {
+-RepoUsuarios repoUsuarios
++ void calcularSugerenciaDiaria()
+}
+Class RepoAlertas {
+-List<Alertas> alertas
++ Getter,Setter, add, remove()
+}
+Enum Alerta{
+GRANIZO, 
+LLUVIA
+}
+Class ServiceAlertasDiarias{
+-ServicioMeteorologico servicioMeteorologico
+-RepoAlertas repoAlertas
+-RepoUsuarios repoUsuarios
++void actualizarAlertas(String ciudad)
+}
+class AccuWeather{
+...
++List<Alerta> getAlertasMeteorologicas(String ciudad)
++Alerta aleraExternatToAlerta(String externa)
+}
+
+Abstract Class Notificacion{
+-Alerta alerta
++void notificar(List<Alerta> alertas)
++abstract void accion()
+}
+Class NotificacionParaguaXLluvia {
++void accion()
+}
+Class MailNuevaAlerta {
++void notificar(List<Alerta> alertas)
++void accion()
+}
+Interface servicioMeteorologico {
+}
+MailNuevaAlerta --|> Notificacion
+NotificacionParaguaXLluvia --|> Notificacion
+Usuario -->"*" Notificacion
+RepoUsuarios -->"*"Usuario
+RepoAlertas -->"*" Alerta
+ServiceSugerenciaDiaria --> RepoUsuarios
+ServiceAlertasDiarias --> RepoUsuarios
+ServiceAlertasDiarias --> RepoAlertas
+ServiceAlertasDiarias --> servicioMeteorologico
+AccuWeather..|>servicioMeteorologico
+@enduml

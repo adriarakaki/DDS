@@ -1,0 +1,92 @@
+Class Usuario {
+    ...
+    GeneradorSugerencias generadorSugerencias; // Esto venia entregas pasadas
+    Sugerencia sugerenciaDiaria;
+    List<Notificacion> notificaciones = new ArrayList<>; // Con getter,setter, addNotificacion y removeNotificacion
+    public List<Sugerencia> obtenerSugerencia(){
+        // Implementado en entregas pasadas
+    }
+    public Sugerencia obtenerSugerenciaDiaria(){
+        sugerenciaDiaria = obtenerSugerencia().first();
+        return sugerenciaDiaria;
+    }
+    public void notificarNuevasAlertas(List<Alerta> alertas){
+        notificaciones.forEach(cada => cada.notificar(alertas));
+    }
+}
+
+
+Class RepoUsuarios {
+    List<Usuario> usuarios;
+    
+    public List<Usuario> getAll(){ return usuarios;}
+}
+Class ServiceSugerenciaDiaria {
+    RepoUsuarios repoUsuarios;
+
+    public void calcularSugerenciaDiaria(){
+        repoUsuarios.getAll().forEach(cada => cada.obtenerSugerenciaDiaria());
+    }
+}
+
+Class RepoAlertas {
+    List<Alertas> alertas = new ArrayList<>();
+    // Getter,Setter, un metodo para quitar y otro para agregar alertas
+}
+
+Enum Alerta{
+    GRANIZO,LLUVIA,....
+}
+Class ServiceAlertasDiarias{
+    ServicioMeteorologico servicioMeteorologico;
+    RepoAlertas repoAlertas;
+    RepoUsuarios repoUsuarios;
+    public void actualizarAlertas(String ciudad){
+        List<Alerta> alertas = servicioMeteorologico.getAlertasMeteorologicas(ciudad)
+        repoAlertas.setAlertas(alertas);
+        repoUsuarios.filter(cada => cada.getCiudad() = ciudad).forEach(cada => cada.obtenerSugerenciaDiaria());
+        repoUsuarios.filter(cada => cada.getCiudad() = ciudad).forEach(cada => cada.notificarNuevasAlertas(alertas));
+    }
+
+}
+public class AccuWeather  implements ServicioMeteorologico{
+    ....
+    @override 
+    List<Alerta> getAlertasMeteorologicas(String ciudad){
+        return apiClima.getAlertas(ciudad).alertas("CurrenAlerts") // obtengo la lista de alertas segun AccuWeather
+        .map(cada => aleraExternatToAlerta(cada)).collect(Collectors.toList()); // Transformo las alertas de AccuWeather en las Alertas del sistema
+    }
+
+    @override
+    Alerta aleraExternatToAlerta(String externa){
+        // Matcheo las alertas que puede devolver AccuWeather y devuelvo la que seria en nuestro Enum de alertas
+    }
+}
+
+Abstrac Class Notificacion{
+    Alerta alerta;
+    public void notificar(List<Alerta> alertas){
+        if(alertas.contains(alerta))
+        accion();
+    }
+    public Abstract void accion(){
+
+    }
+}
+Class NotificacionParaguaXLluvia extends Notificacion{
+    @override 
+    void accion(){
+        // notifica que llueve y debe llevar paraguas
+    }
+}
+Class MailNuevaAlerta extends Notificacion{
+    @override 
+    void notificar(List<Alerta> alertas){
+        accion();
+    }
+    @override
+    void accion(){
+        //notifica al usuario sobre la nueva alerta
+    }
+}
+// Y asi con todas las acciones para las alertas.
